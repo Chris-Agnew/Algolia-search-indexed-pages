@@ -1,0 +1,15 @@
+import "../loadEnv";
+
+import { fetchBuilderPages } from "../utils/builder";
+import { indexPages } from "../utils/algolia";
+
+const run = async () => {
+  try {
+    const pages = await fetchBuilderPages();
+    await indexPages(pages);
+  } catch (error) {
+    console.error("Error running the script:", error);
+  }
+};
+
+run().catch(console.error);
