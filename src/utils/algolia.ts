@@ -1,4 +1,5 @@
 import algoliasearch from "algoliasearch";
+import { BuilderPage } from "@/utils/builder";
 
 const algoliaAppId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID;
 const algoliaApiKey = process.env.NEXT_PUBLIC_ALGOLIA_API_KEY;
@@ -7,8 +8,8 @@ const algoliaIndexName = process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME;
 const algoliaClient = algoliasearch(algoliaAppId!, algoliaApiKey!);
 const index = algoliaClient.initIndex(algoliaIndexName!);
 
-export const indexPages = async (pages: any[]) => {
-  const objects = pages.map((page: any) => ({
+export const indexPages = async (pages: BuilderPage[]): Promise<void> => {
+  const objects = pages.map((page) => ({
     objectID: page.id,
     title: page.data.title,
     description: page.data.description,
