@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "index-pages": "ts-node -P tsconfig.tsnode.json src/scripts/indexBuilderToAlgolia.ts"
+    "index-pages": "ts-node -P tsconfig.tsnode.json src/scripts/indexBuilderToAlgolia.ts",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@algolia/client-search": "^4.24.0",
@@ -28,6 +29,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cypress": "^13.13.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "typescript": "^5"
