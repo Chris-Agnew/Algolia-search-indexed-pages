@@ -12,9 +12,15 @@ export interface BuilderPage {
   };
 }
 
-export const fetchBuilderPages = async (): Promise<BuilderPage[]> => {
-  console.log("Builder API Key:", builderApiKey); // Log the API key to ensure it is loaded
+export interface SearchResult {
+  objectID: string;
+  title: string;
+  description: string;
+  url: string;
+  content: string;
+}
 
+export const fetchBuilderPages = async (): Promise<BuilderPage[]> => {
   if (!builderApiKey) {
     throw new Error("Builder API key is not defined");
   }
@@ -23,7 +29,6 @@ export const fetchBuilderPages = async (): Promise<BuilderPage[]> => {
     const response = await axios.get<{ results: BuilderPage[] }>(
       `https://cdn.builder.io/api/v3/content/page?apiKey=${builderApiKey}`
     );
-    console.log("API Response:", response.data);
     return response.data.results;
   } catch (error: any) {
     console.error(
