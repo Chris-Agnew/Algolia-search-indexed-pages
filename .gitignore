@@ -26,7 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+#.env*.local I usually dont upload this to repo but this will be the fastest way for you to test my code for a test project
 
 # vercel
 .vercel
