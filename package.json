@@ -9,7 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@algolia/client-search": "^4.24.0",
+    "@builder.io/react": "^3.2.11",
+    "@builder.io/sdk": "^2.2.5",
     "@builder.io/sdk-react-nextjs": "^0.14.30",
+    "algoliasearch": "^4.24.0",
+    "axios": "^1.7.2",
+    "dompurify": "^3.1.6",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18"
