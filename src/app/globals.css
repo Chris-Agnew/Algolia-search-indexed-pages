@@ -57,28 +57,35 @@ input {
   width: 100%;
   max-width: 500px;
   margin-top: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
 
 /* Style individual search result items */
 .search-result-item {
   display: block;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  transition: box-shadow 0.3s;
+  border-bottom: 1px solid #eee;
   text-decoration: none;
   color: inherit;
 }
 
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
 .search-result-item:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
 }
 
 /* Style the titles of the search results */
 .search-result-item h2 {
   font-size: 20px;
   margin-bottom: 5px;
+  text-transform: capitalize;
 }
 
 .search-result-item p {
@@ -141,7 +148,7 @@ input {
   margin-top: 10px;
 }
 
-/* Mobile styles we can go crazy with this but for now we will keep it simple */
+/* Mobile styles */
 @media (max-width: 768px) {
   .header h1 {
     font-size: 28px;
@@ -158,6 +165,10 @@ input {
   .search-input {
     width: 90%;
   }
+
+  .search-results {
+    width: 90%;
+  }
 }
 
 /* Styles for the page content */
@@ -169,13 +180,13 @@ input {
 }
 
 .page-content h2 {
-  font-size: 36px; /* Larger font size for the main title */
+  font-size: 36px;
   margin-bottom: 10px;
   text-align: center;
 }
 
 .page-content p {
-  font-size: 18px; /* Larger font size for the description */
+  font-size: 18px;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -188,4 +199,36 @@ input {
   border-radius: 4px;
   margin-bottom: 20px;
   text-align: center;
+}
+
+/* Styles for the 404 page */
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+.not-found-container h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.not-found-container p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.home-link {
+  font-size: 18px;
+  color: #0070f3;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.home-link:hover {
+  text-decoration: underline;
 }
