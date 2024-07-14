@@ -2,7 +2,7 @@
 
 import React from "react";
 import { mount } from "cypress/react18";
-import Search from "@/components/Search";
+import Search from "../../src/components/Search";
 
 type SearchResult = {
   title: string;
