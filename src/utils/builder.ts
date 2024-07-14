@@ -1,19 +1,41 @@
 import axios from "axios";
 
-const builderApiKey = process.env.NEXT_PUBLIC_BUILDER_API_KEY;
+export interface Block {
+  id: string;
+  component?: {
+    name: string;
+    options: {
+      text?: string;
+    };
+  };
+  children?: Block[];
+  responsiveStyles?: {
+    large: {
+      [key: string]: string | number;
+    };
+  };
+}
 
 export interface BuilderPage {
   id: string;
   data: {
-    title: string;
+    themeId: boolean;
     description: string;
-    blocks: any[];
+    title: string;
+    blocks: Block[];
     url: string;
+    state: {
+      deviceSize: string;
+      location: {
+        path: string;
+        query: Record<string, string>;
+      };
+    };
   };
+  [key: string]: any;
 }
 
 export interface SearchResult {
-  objectID: string;
   title: string;
   description: string;
   url: string;
@@ -21,20 +43,13 @@ export interface SearchResult {
 }
 
 export const fetchBuilderPages = async (): Promise<BuilderPage[]> => {
-  if (!builderApiKey) {
-    throw new Error("Builder API key is not defined");
-  }
-
   try {
-    const response = await axios.get<{ results: BuilderPage[] }>(
-      `https://cdn.builder.io/api/v3/content/page?apiKey=${builderApiKey}`
+    const response = await axios.get(
+      `https://cdn.builder.io/api/v3/content/page?apiKey=${process.env.NEXT_PUBLIC_BUILDER_API_KEY}`
     );
     return response.data.results;
-  } catch (error: any) {
-    console.error(
-      "API Request Error:",
-      error.response ? error.response.data : error.message
-    );
+  } catch (error) {
+    console.error("Error fetching Builder pages:", error);
     throw error;
   }
 };
