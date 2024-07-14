@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import algoliasearch, { SearchIndex } from "algoliasearch/lite";
 import { SearchResult } from "@/utils/builder";
-import DOMPurify from "dompurify";
 import Link from "next/link";
 
 const searchClient = algoliasearch(
@@ -40,25 +39,29 @@ const Search: React.FC = () => {
         onChange={handleSearch}
         placeholder="Search Builder.io Pages"
         className="search-input"
+        data-cy="search-input"
       />
-      <div className="search-results">
-        {results.map((hit, index) => (
-          <Link
-            key={index}
-            href={hit.url}
-            passHref
-            className="search-result-item"
-          >
-            <h2>{hit.title || "No Title"}</h2>
-            <p>{hit.description || "No Description"}</p>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(hit.content || ""),
-              }}
-            />
-          </Link>
-        ))}
-      </div>
+      {query.trim() !== "" && (
+        <div className="search-results" data-cy="search-results">
+          {results.length > 0 ? (
+            results.map((hit, index) => (
+              <Link
+                key={index}
+                href={hit.url}
+                passHref
+                className="search-result-item"
+                data-cy="search-result-item"
+              >
+                <h2>{hit.title}</h2>
+              </Link>
+            ))
+          ) : (
+            <p className="no-results" data-cy="no-results">
+              No results found
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
