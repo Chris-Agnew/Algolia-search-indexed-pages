@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { notFound } from "next/navigation";
-import { fetchBuilderPages, BuilderPage } from "@/utils/builder";
+import { fetchBuilderPages, BuilderPage, Block } from "@/utils/builder";
 import DOMPurify from "dompurify";
 import Search from "@/components/Search";
 import Link from "next/link";
@@ -14,93 +14,98 @@ interface Props {
 
 const Page: React.FC<Props> = ({ params }) => {
   const [page, setPage] = useState<BuilderPage | null>(null);
-  const [pages, setPages] = useState<BuilderPage[]>([]);
+  const [allPages, setAllPages] = useState<BuilderPage[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPages = async () => {
       try {
-        const fetchedPages = await fetchBuilderPages();
-        setPages(fetchedPages);
-
+        const pages = await fetchBuilderPages();
+        setAllPages(pages);
         const pathString = params.slug ? `/${params.slug.join("/")}` : "/";
-        const foundPage = fetchedPages.find(
-          (page) => page.data.url === pathString
-        );
+        const foundPage = pages.find((page) => page.data.url === pathString);
 
         if (foundPage) {
           setPage(foundPage);
         } else if (pathString === "/") {
           setPage(null); // This indicates we should show the home page content
         } else {
-          notFound();
+          setPage(null);
+          notFound(); // Handle not found
         }
       } catch (error) {
         console.error("Error fetching page:", error);
-        notFound();
+        setPage(null);
+        notFound(); // Handle fetch error
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPages();
   }, [params.slug]);
 
+  const renderBlocks = (blocks: Block[]): JSX.Element[] => {
+    return blocks.map((block) => {
+      if (block.component?.options?.text) {
+        return (
+          <div
+            key={block.id}
+            className="content-block"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(block.component.options.text || ""),
+            }}
+          />
+        );
+      }
+      if (block.children) {
+        return (
+          <div key={block.id} className="nested-block">
+            {renderBlocks(block.children)}
+          </div>
+        );
+      }
+      return <div key={block.id} className="empty-block" />;
+    });
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   if (page === null && params.slug === undefined) {
     return (
       <div className="home-container">
-        <header className="header">
+        <div className="header">
           <h1>Welcome to Builder.io Pages Search</h1>
           <p>Use the search below to find Builder.io pages:</p>
-        </header>
+        </div>
         <Search />
-        <section className="indexed-pages">
+        <div className="indexed-pages">
           <h2>Indexed Pages</h2>
           <div className="pages-list">
-            {pages.map((page) => (
-              <Link
-                key={page.id}
-                href={page.data.url}
-                passHref
-                className="page-item"
-              >
-                <div>
-                  <h3>{page.data.title}</h3>
-                  <p>{page.data.description}</p>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(
-                        page.data.blocks
-                          .map((block) => block.component?.options?.text)
-                          .join(" ")
-                      ),
-                    }}
-                  />
-                </div>
+            {allPages.map((page) => (
+              <Link key={page.id} href={page.data.url} className="page-item">
+                <h3>{page.data.title}</h3>
+                <p>{page.data.description}</p>
               </Link>
             ))}
           </div>
-        </section>
+        </div>
       </div>
     );
   }
 
   if (page === null) {
-    return <div>Loading...</div>;
+    notFound();
+    return null; // Avoid displaying the loading state after notFound is triggered
   }
 
   return (
     <div className="page-content">
       <h2>{page.data.title}</h2>
       <p>{page.data.description}</p>
-      {page.data.blocks
-        .filter((block) => block.component?.options?.text) // Filter out blocks without text
-        .map((block, index) => (
-          <div
-            key={index}
-            className="content-block"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(block.component?.options?.text),
-            }}
-          />
-        ))}
+      {renderBlocks(page.data.blocks)}
       <Search />
     </div>
   );
