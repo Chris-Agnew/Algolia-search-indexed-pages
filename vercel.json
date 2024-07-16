@@ -2,18 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "next.config.js",
-      "use": "@vercel/next"
+      "src": "src/app/api/indexPages/route.ts",
+      "use": "@vercel/node"
     },
     {
-      "src": "api/indexPages/route.ts",
-      "use": "@vercel/node"
+      "src": "next.config.mjs",
+      "use": "@vercel/next"
     }
   ],
   "routes": [
     {
       "src": "/api/indexPages",
-      "dest": "/api/indexPages/route.ts"
+      "dest": "/src/app/api/indexPages/route.ts"
     }
   ]
 }
