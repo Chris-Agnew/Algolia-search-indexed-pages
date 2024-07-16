@@ -2,9 +2,13 @@ describe("Search Component", () => {
   it("should search and display results", () => {
     cy.visit("/");
 
-    cy.get("[data-cy=search-input]").type("test query");
+    const searchQuery = "an article from a legacy CMS";
+    cy.get("[data-cy=search-input]").type(searchQuery);
 
-    cy.get("[data-cy=search-results]").should("contain", "expected result");
+    cy.get("[data-cy=search-results]").should("exist").and("not.be.empty");
+    cy.get("[data-cy=search-result-item]")
+      .first()
+      .should("contain.text", searchQuery);
   });
 
   it("should verify Algolia environment variables", () => {
