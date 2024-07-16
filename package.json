@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "index-pages": "ts-node -P tsconfig.tsnode.json src/scripts/indexBuilderToAlgolia.ts",
-    "test": "cypress run"
+    "cy:run": "cypress run",
+    "test": "start-server-and-test start http://localhost:3000 cy:run"
   },
   "dependencies": {
     "@algolia/client-search": "^4.24.0",
@@ -36,6 +37,7 @@
     "cypress": "^13.13.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "wait-on": "^7.2.0"
   }
 }
