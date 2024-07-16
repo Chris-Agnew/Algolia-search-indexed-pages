@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import algoliasearch, { SearchIndex } from "algoliasearch/lite";
-import { SearchResult } from "@/utils/builder";
 import Link from "next/link";
+
+interface SearchResult {
+  title: string;
+  url: string;
+  description: string;
+}
 
 const searchClient = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID!,
@@ -47,7 +52,7 @@ const Search: React.FC = () => {
             results.map((hit, index) => (
               <Link
                 key={index}
-                href={hit.url}
+                href={hit.url ?? "#"} // Fallback URL if hit.url is undefined
                 passHref
                 className="search-result-item"
                 data-cy="search-result-item"

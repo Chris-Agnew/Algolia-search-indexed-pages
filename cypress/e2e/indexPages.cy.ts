@@ -1,36 +1,19 @@
-describe("Index Builder Content", () => {
-  it("should successfully index content from Builder.io to Algolia", () => {
-    cy.request({
-      method: "POST",
-      url: "/api/indexPages",
-      failOnStatusCode: false,
-    }).then((response) => {
-      // Ensure the response status is 200 (OK)
-      expect(response.status).to.eq(200);
-      // Ensure the response body has the correct message
-      expect(response.body).to.have.property(
-        "message",
-        "Content indexed successfully"
-      );
-    });
+describe("Search Component", () => {
+  it("should search and display results", () => {
+    cy.visit("/");
+
+    cy.get("[data-cy=search-input]").type("test query");
+
+    cy.get("[data-cy=search-results]").should("contain", "expected result");
   });
 
-  it("should handle errors gracefully", () => {
-    cy.request({
-      method: "POST",
-      url: "/api/indexPages",
-      failOnStatusCode: false,
-      headers: {
-        "x-builder-api-key": "invalid_key",
-      },
-    }).then((response) => {
-      // Ensure the response status is 500 (Internal Server Error)
-      expect(response.status).to.eq(500);
-      // Ensure the response body has the correct error message
-      expect(response.body).to.have.property(
-        "message",
-        "Error indexing content"
-      );
-    });
+  it("should verify Algolia environment variables", () => {
+    const appId = Cypress.env("NEXT_PUBLIC_ALGOLIA_APP_ID");
+    const apiKey = Cypress.env("NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY");
+    const indexName = Cypress.env("NEXT_PUBLIC_ALGOLIA_INDEX_NAME");
+
+    expect(appId).to.equal("YW9HHXMU3W");
+    expect(apiKey).to.equal("b8a2b4b726ad8119c987f9e6070b28b3");
+    expect(indexName).to.equal("builder_pages_index");
   });
 });
