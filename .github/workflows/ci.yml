@@ -24,24 +24,14 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Start server
-        run: npm start &
+      - name: Run Cypress tests
         env:
           NEXT_PUBLIC_BUILDER_API_KEY: ${{ secrets.NEXT_PUBLIC_BUILDER_API_KEY }}
           NEXT_PUBLIC_ALGOLIA_APP_ID: ${{ secrets.NEXT_PUBLIC_ALGOLIA_APP_ID }}
           NEXT_PUBLIC_ALGOLIA_API_KEY: ${{ secrets.NEXT_PUBLIC_ALGOLIA_API_KEY }}
           NEXT_PUBLIC_ALGOLIA_INDEX_NAME: ${{ secrets.NEXT_PUBLIC_ALGOLIA_INDEX_NAME }}
           NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY: ${{ secrets.NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY }}
-
-      - name: Wait for server to be ready
-        run: npx wait-on http://localhost:3000
-
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v4
-        with:
-          start: npm start
-          wait-on: http://localhost:3000
-          config-file: cypress.config.ts
+        run: npx start-server-and-test start http://localhost:3000 cy:run
 
       - name: Deploy to Vercel
         env:
