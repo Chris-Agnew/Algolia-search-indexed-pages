@@ -19,19 +19,23 @@
     "axios": "^1.7.2",
     "dompurify": "^3.1.6",
     "dotenv": "^16.4.5",
-    "next": "14.2.5",
-    "react": "^18",
-    "react-dom": "^18",
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
+    "@types/algoliasearch": "^4.0.0",
+    "@types/axios": "^0.14.0",
     "@types/dompurify": "^3.0.5",
-    "@types/node": "^20",
-    "@types/react": "^18",
+    "@types/dotenv": "^8.2.0",
+    "@types/next": "^9.0.0",
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
     "@types/react-dom": "^18",
     "cypress": "^13.13.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
-    "typescript": "^5"
+    "typescript": "^5.5.3"
   }
 }
