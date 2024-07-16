@@ -31,6 +31,7 @@ jobs:
           NEXT_PUBLIC_ALGOLIA_API_KEY: ${{ secrets.NEXT_PUBLIC_ALGOLIA_API_KEY }}
           NEXT_PUBLIC_ALGOLIA_INDEX_NAME: ${{ secrets.NEXT_PUBLIC_ALGOLIA_INDEX_NAME }}
           NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY: ${{ secrets.NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY }}
+          CYPRESS_BASE_URL: "https://alipes-dev-assessment.vercel.app"
         run: npx start-server-and-test start http://localhost:3000 cy:run
 
       - name: Deploy to Vercel

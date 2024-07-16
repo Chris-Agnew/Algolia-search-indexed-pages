@@ -1,8 +1,10 @@
-/// <reference types="cypress" />
-
 describe("Index Builder Content", () => {
   it("should successfully index content from Builder.io to Algolia", () => {
-    cy.request("POST", "/api/indexPages").then((response) => {
+    cy.request({
+      method: "POST",
+      url: "/api/indexPages",
+      failOnStatusCode: false,
+    }).then((response) => {
       // Ensure the response status is 200 (OK)
       expect(response.status).to.eq(200);
       // Ensure the response body has the correct message
@@ -13,13 +15,13 @@ describe("Index Builder Content", () => {
     });
   });
 
-  it("should handle errors ", () => {
+  it("should handle errors gracefully", () => {
     cy.request({
       method: "POST",
       url: "/api/indexPages",
-      failOnStatusCode: false, // Prevent Cypress from failing the test on a non-2xx status code
+      failOnStatusCode: false,
       headers: {
-        "x-test-error": "true", // Special header to trigger the error
+        "x-builder-api-key": "invalid_key",
       },
     }).then((response) => {
       // Ensure the response status is 500 (Internal Server Error)
