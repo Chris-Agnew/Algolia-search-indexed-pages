@@ -1,3 +1,6 @@
+[![CI](https://github.com/Chris-Agnew/alipes-dev-assessment/actions/workflows/ci.yml/badge.svg)](https://github.com/Chris-Agnew/alipes-dev-assessment/actions/workflows/ci.yml)
+[![Cypress.io](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg)](https://www.cypress.io/)
+
 # Project Details
 
 This repository contains a Next.js 14 application integrated with Cypress for both end-to-end (E2E) and component testing that includes a script to index pages from Builder.io to Algolia and searchable searchbar with autocomplete. Indexed pages show on bottom of search bar for easy access (fine for small test projects)
