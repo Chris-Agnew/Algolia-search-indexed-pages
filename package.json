@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "index-pages": "ts-node -P tsconfig.tsnode.json src/scripts/indexBuilderToAlgolia.ts",
-    "cy:open": "cypress open"
+    "test": "cypress run"
   },
   "dependencies": {
     "@algolia/client-search": "^4.24.0",
