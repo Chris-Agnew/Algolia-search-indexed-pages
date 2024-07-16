@@ -1,6 +1,6 @@
 {
-  "name": "builder-app-starter",
-  "version": "0.1.0",
+  "name": "builder.io-indexed-pages-to-algolia-search",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -37,6 +37,7 @@
     "cypress": "^13.13.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
+    "start-server-and-test": "^2.0.4",
     "typescript": "^5.5.3",
     "wait-on": "^7.2.0"
   }
