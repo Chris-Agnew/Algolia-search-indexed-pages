@@ -1,4 +1,4 @@
-name: Build, Test and Deploy
+name: CI
 
 on:
   push:
@@ -12,36 +12,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "18"
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build the project
+      - name: Run tests
+        run: npm run cy:run
+
+      - name: Build application
         run: npm run build
 
-      - name: Start server and run tests
-        run: |
-          npx start-server-and-test "npm start" http://localhost:3000 "npm run cy:run"
-        env:
-          NEXT_PUBLIC_ALGOLIA_APP_ID: ${{ secrets.NEXT_PUBLIC_ALGOLIA_APP_ID }}
-          NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY: ${{ secrets.NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY }}
-          NEXT_PUBLIC_ALGOLIA_API_KEY: ${{ secrets.NEXT_PUBLIC_ALGOLIA_API_KEY }}
-          NEXT_PUBLIC_ALGOLIA_INDEX_NAME: ${{ secrets.NEXT_PUBLIC_ALGOLIA_INDEX_NAME }}
-          CYPRESS_BASE_URL: "http://localhost:3000"
-
       - name: Deploy to Vercel
-        run: |
-          npm install -g vercel
-          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+        run: vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
