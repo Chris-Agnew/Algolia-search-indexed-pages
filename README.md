@@ -59,20 +59,20 @@ npx cypress run --component
 
 The GitHub Actions workflow is configured to perform the following tasks:
 
-    1.	Checkout Code: Checks out the code from the repository.\
-    2.	Set Up Node.js: Sets up Node.js environment for the project.\
-    3.	Install Dependencies: Installs the required npm dependencies.\
-    4.	Run Tests: Executes the Cypress tests to ensure the application is working as expected.\
-    5.	Build Application: Builds the Next.js application.\
-    6.	Deploy to Vercel: Deploys the application to Vercel.\
+    1.	Checkout Code: Checks out the code from the repository.
+    2.	Set Up Node.js: Sets up Node.js environment for the project.
+    3.	Install Dependencies: Installs the required npm dependencies.
+    4.	Run Tests: Executes the Cypress tests to ensure the application is working as expected.
+    5.	Build Application: Builds the Next.js application.
+    6.	Deploy to Vercel: Deploys the application to Vercel.
 
 ## Secrets Configuration
 
 For deploying to Vercel, you need to set up a Vercel token as a secret in your GitHub repository:
 
-    1.	Go to your GitHub repository.\
-    2.	Navigate to Settings > Secrets > New repository secret.\
-    3.	Add a new secret with the name VERCEL_TOKEN and the value of your Vercel token.\
+    1.	Go to your GitHub repository.
+    2.	Navigate to Settings > Secrets > New repository secret.
+    3.	Add a new secret with the name VERCEL_TOKEN and the value of your Vercel token.
 
 Running the Workflow
 
