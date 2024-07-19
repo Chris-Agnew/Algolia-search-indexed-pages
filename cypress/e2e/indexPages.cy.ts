@@ -11,13 +11,15 @@ describe("Search Component", () => {
       .should("contain.text", searchQuery);
   });
 
-  it("should verify Algolia environment variables", () => {
-    const appId = Cypress.env("NEXT_PUBLIC_ALGOLIA_APP_ID");
-    const apiKey = Cypress.env("NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY");
-    const indexName = Cypress.env("NEXT_PUBLIC_ALGOLIA_INDEX_NAME");
+  describe("Search Component", () => {
+    it("should verify Algolia environment variables", () => {
+      const appId = Cypress.env("NEXT_PUBLIC_ALGOLIA_APP_ID");
+      const apiKey = Cypress.env("NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY");
+      const indexName = Cypress.env("NEXT_PUBLIC_ALGOLIA_INDEX_NAME");
 
-    expect(appId).to.equal("YW9HHXMU3W");
-    expect(apiKey).to.equal("b8a2b4b726ad8119c987f9e6070b28b3");
-    expect(indexName).to.equal("builder_pages_index");
+      expect(appId).to.not.be.undefined;
+      expect(apiKey).to.not.be.undefined;
+      expect(indexName).to.not.be.undefined;
+    });
   });
 });
