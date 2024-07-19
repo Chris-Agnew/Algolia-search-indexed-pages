@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { fetchBuilderPages } from "@/utils/builder";
 import { indexPages } from "@/utils/algolia";
 
+// Handler function to index Builder.io pages in Algolia
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
   try {
     console.log("Request received for indexing");
