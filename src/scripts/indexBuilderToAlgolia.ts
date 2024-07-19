@@ -1,8 +1,7 @@
-import "../loadEnv";
-
 import { fetchBuilderPages } from "../utils/builder";
 import { indexPages } from "../utils/algolia";
 
+// Function to fetch all pages from Builder.io and index them in Algolia
 const run = async () => {
   try {
     const pages = await fetchBuilderPages();

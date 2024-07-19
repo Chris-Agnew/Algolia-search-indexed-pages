@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import algoliasearch, { SearchIndex } from "algoliasearch/lite";
 import Link from "next/link";
+import DOMPurify from "dompurify";
 
 interface SearchResult {
   title: string;
@@ -25,6 +26,7 @@ const Search: React.FC = () => {
     setIndex(idx);
   }, []);
 
+  // Handle search input change and update the results
   const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
 
@@ -37,36 +39,51 @@ const Search: React.FC = () => {
   };
 
   return (
-    <div className="search-container">
-      <input
-        type="text"
-        value={query}
-        onChange={handleSearch}
-        placeholder="Search Builder.io Pages"
-        className="search-input"
-        data-cy="search-input"
-      />
-      {query.trim() !== "" && (
-        <div className="search-results" data-cy="search-results">
-          {results.length > 0 ? (
-            results.map((hit, index) => (
-              <Link
-                key={index}
-                href={hit.url ?? "#"} // Fallback URL if hit.url is undefined
-                passHref
-                className="search-result-item"
-                data-cy="search-result-item"
-              >
-                <h2>{hit.title}</h2>
-              </Link>
-            ))
-          ) : (
-            <p className="no-results" data-cy="no-results">
-              No results found
-            </p>
-          )}
-        </div>
-      )}
+    <div className="max-w-lg mx-auto p-4" data-cy="search-container">
+      <div className="relative">
+        <input
+          type="text"
+          value={query}
+          onChange={handleSearch}
+          placeholder="Search Builder.io Pages"
+          className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          data-cy="search-input"
+          aria-label="Search"
+        />
+        {query.trim() !== "" && (
+          <div
+            className="absolute mt-2 w-full bg-white border rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto capitalize"
+            data-cy="search-results"
+          >
+            {results.length > 0 ? (
+              results.map(
+                (hit, index) =>
+                  hit.title && (
+                    <Link
+                      key={index}
+                      href={hit.url ?? "#"} // Fallback URL if hit.url is undefined
+                      className="block p-2 hover:bg-gray-200 focus:bg-gray-200 "
+                      data-cy="search-result-item"
+                    >
+                      <div>
+                        <h2 className="text-lg font-semibold">{hit.title}</h2>
+                        <p className="text-sm text-gray-600">
+                          {hit.description}
+                        </p>
+                      </div>
+                    </Link>
+                  )
+              )
+            ) : (
+              <div className="p-2">
+                <p className="text-gray-600" data-cy="no-results">
+                  No results found
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
