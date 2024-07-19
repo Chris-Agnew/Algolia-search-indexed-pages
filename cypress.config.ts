@@ -17,7 +17,7 @@ export default defineConfig({
     supportFile: "cypress/support/component.ts",
   },
   e2e: {
-    baseUrl: "https://alipes-dev-assessment.vercel.app",
+    baseUrl: "https://builderio-algolia-index.vercel.app",
     supportFile: "cypress/support/e2e.ts",
     specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
   },
